@@ -15,9 +15,9 @@ namespace inspo_maze
 
         public void Start()
         {
-            Console.Title = "THE BEST SUDOKU EVER!";
-            Console.SetWindowSize(90, 32);
-            DisplayIntro();
+            //Console.Title = "THE BEST SUDOKU EVER!";
+            //Console.SetWindowSize(90, 32);
+            //DisplayIntro();
             string[,] grid = LevelInput();
             MyWorld = new World(grid);
 
@@ -58,22 +58,9 @@ namespace inspo_maze
             Console.ReadKey(true);
         }
       
-        public void choseLevel() 
-        {
-            Console.Clear();
-            PrintSudokuHorizontal();
-            Console.WriteLine();
-            Console.WriteLine();
-            Console.ForegroundColor = ConsoleColor.Yellow;
-            Console.WriteLine("Please choose one of below mentioned levels:");
-            Console.WriteLine("Press '1' for EASY Sudoku");
-            Console.WriteLine("Press '2' for MEDIUM Sudoku");
-            Console.WriteLine("Press '3' for HARD Sudoku");
-            Console.WriteLine();
-            Console.WriteLine("To go back to menu press 'N'.");
-        }
         public string[,] LevelInput()
         {
+            Console.CursorVisible = false;
             ConsoleKeyInfo keyInfo = Console.ReadKey(true);
             ConsoleKey key = keyInfo.Key;
 
@@ -81,16 +68,19 @@ namespace inspo_maze
             {
                 case ConsoleKey.D1:
                 case ConsoleKey.NumPad1:
-                    Console.WriteLine("You chose level easy! Press Enter!");
+                    Console.WriteLine("You chose level easy!");
+                    System.Threading.Thread.Sleep(400);
                     return LevelParser.ParseFileToArray("Level1.txt");
 
                 case ConsoleKey.D2:
                 case ConsoleKey.NumPad2:
-                    Console.WriteLine("You chose level medium! Press Enter!");
+                    Console.WriteLine("You chose level medium!");
+                    System.Threading.Thread.Sleep(400);
                     return LevelParser.ParseFileToArray("Level2.txt");
                 case ConsoleKey.D3:
                 case ConsoleKey.NumPad3:
-                    Console.WriteLine("You chose level easy! Press Enter!");
+                    Console.WriteLine("You chose level easy!");
+                    System.Threading.Thread.Sleep(400);
                     return LevelParser.ParseFileToArray("Level3.txt");
                 case ConsoleKey.N:
                     InfoAboutGame();
@@ -99,20 +89,7 @@ namespace inspo_maze
             Console.ResetColor();
             return null;
         }
-        private void DisplayIntro()
-        {
-            for (int i = 0; i < 2; i++) //sudoku intro visualisation movement
-            {
-                PrintSudokuHorizontal();
-                System.Threading.Thread.Sleep(300);
-                Console.Clear();
-                PrintSudoku();
-                System.Threading.Thread.Sleep(300);
-                Console.Clear();
-            }
-            InfoAboutGame();
-            Console.WriteLine();
-        }
+
         private void DrawFrame(string[,] grid)
         {
             Console.Clear();
@@ -124,13 +101,6 @@ namespace inspo_maze
         {
             ConsoleKeyInfo keyInfo = Console.ReadKey(true);
             ConsoleKey key = keyInfo.Key;
-            //int number = 3;
-            //if (key == ConsoleKey.H)
-            //{
-            //    Hints.Add(number);
-            //    number--;
-            //}
-            //Console.WriteLine(number);
             switch (key)
                 {
                     case ConsoleKey.LeftArrow:
@@ -219,10 +189,13 @@ namespace inspo_maze
                     }
                         break;
                 case ConsoleKey.Escape:
-                    InfoAboutGame();
+                    Console.Clear();
+                    Console.WriteLine("You GAVE UP!!!!!!!!!!!!!!!");
+                    Environment.Exit(0);
+                   
                     break;
-              
-                    default:
+
+                default:
                         break;
             }
         }
@@ -242,40 +215,43 @@ namespace inspo_maze
             Console.Clear();
             //Console.SetCursorPosition(0, 0);
             TimeSpan playerTime = timer.Stop();
-            //Console.WriteLine("What is your name?");
-            //string inputName = Console.ReadLine();
-            //var equal =
-            //gridSolution.Rank == LevelParser.ParseFileToArray("Level1Solution.txt").Rank &&
-            //Enumerable.Range(0, grid.Rank).All(dimension => grid.GetLength(dimension) == LevelParser.ParseFileToArray("Level1Solution.txt").GetLength(dimension)) &&
-            //grid.Cast<string>().SequenceEqual(LevelParser.ParseFileToArray("Level1Solution.txt").Cast<string>());
-            //if (equal)
-            //{
-            //    PlayerRegister thisPlayer = new PlayerRegister(inputName, playerTime, 1);
-            //    Players.Add(thisPlayer);
-            //    Console.WriteLine($"Your name is {thisPlayer.Name} you are the {Players.Count}. to finish this sudoku!");
-            //}
-            //var equal2 =
-            //gridSolution.Rank == LevelParser.ParseFileToArray("Level2Solution.txt").Rank &&
-            //Enumerable.Range(0, grid.Rank).All(dimension => grid.GetLength(dimension) == LevelParser.ParseFileToArray("Level2Solution.txt").GetLength(dimension)) &&
-            //grid.Cast<string>().SequenceEqual(LevelParser.ParseFileToArray("Level2Solution.txt").Cast<string>());
-            //if (equal2)
-            //{
-            //    PlayerRegister thisPlayer = new PlayerRegister(inputName, playerTime, 2);
-            //    Players.Add(thisPlayer);
-            //    Console.WriteLine($"Your name is {thisPlayer.Name} you are the {Players.Count}. to finish this sudoku!");
-            //}
-            //var equal3 =
-            //gridSolution.Rank == LevelParser.ParseFileToArray("Level3Solution.txt").Rank &&
-            //Enumerable.Range(0, grid.Rank).All(dimension => grid.GetLength(dimension) == LevelParser.ParseFileToArray("Level3Solution.txt").GetLength(dimension)) &&
-            //grid.Cast<string>().SequenceEqual(LevelParser.ParseFileToArray("Level3Solution.txt").Cast<string>());
-            //if (equal3)
-            //{ 
-            //    PlayerRegister thisPlayer = new PlayerRegister(inputName, playerTime, 3);
-            //    Players.Add(thisPlayer);
-            //    Console.WriteLine($"Your name is {thisPlayer.Name} you are the {Players.Count}. to finish this sudoku!");
-            //}
+            Console.WriteLine("What is your name?");
+            string inputName = Console.ReadLine();
+            var equal =
+            gridSolution.Rank == LevelParser.ParseFileToArray("Level1Solution.txt").Rank &&
+            Enumerable.Range(0, grid.Rank).All(dimension => grid.GetLength(dimension) == LevelParser.ParseFileToArray("Level1Solution.txt").GetLength(dimension)) &&
+            grid.Cast<string>().SequenceEqual(LevelParser.ParseFileToArray("Level1Solution.txt").Cast<string>());
+            if (equal)
+            {
+                PlayerRegister thisPlayer = new PlayerRegister(inputName, playerTime, 1);
+                Players.Add(thisPlayer);
+                Console.WriteLine($"Your name is {thisPlayer.Name}");
+                Console.WriteLine("You played the easiest level and one day we will be smart enough for a real list of players!");
+            }
+            var equal2 =
+            gridSolution.Rank == LevelParser.ParseFileToArray("Level2Solution.txt").Rank &&
+            Enumerable.Range(0, grid.Rank).All(dimension => grid.GetLength(dimension) == LevelParser.ParseFileToArray("Level2Solution.txt").GetLength(dimension)) &&
+            grid.Cast<string>().SequenceEqual(LevelParser.ParseFileToArray("Level2Solution.txt").Cast<string>());
+            if (equal2)
+            {
+                PlayerRegister thisPlayer = new PlayerRegister(inputName, playerTime, 2);
+                Players.Add(thisPlayer);
+                Console.WriteLine($"{Players.Count}. Your name is {thisPlayer.Name}");
+                Console.WriteLine("You played the medium level and one day we will be smart enough for a real list of players!");
+            }
+            var equal3 =
+            gridSolution.Rank == LevelParser.ParseFileToArray("Level3Solution.txt").Rank &&
+            Enumerable.Range(0, grid.Rank).All(dimension => grid.GetLength(dimension) == LevelParser.ParseFileToArray("Level3Solution.txt").GetLength(dimension)) &&
+            grid.Cast<string>().SequenceEqual(LevelParser.ParseFileToArray("Level3Solution.txt").Cast<string>());
+            if (equal3)
+            {
+                PlayerRegister thisPlayer = new PlayerRegister(inputName, playerTime, 3);
+                Players.Add(thisPlayer);
+                Console.WriteLine($"{Players.Count}. Your name is {thisPlayer.Name}");
+                Console.WriteLine("You played the hardest level and one day we will be smart enough for a real list of players!");
+            }
 
-            System.Threading.Thread.Sleep(2000);
+            System.Threading.Thread.Sleep(3000);
             Console.Clear();
             Console.SetCursorPosition(0, 0);
             for (int i = 0; i < 4; i++)
@@ -287,7 +263,8 @@ namespace inspo_maze
                 System.Threading.Thread.Sleep(300);
                 Console.Clear();
             }
-            BackToMenu();
+            Console.WriteLine("Press any key to exit!");
+            Console.ReadKey(true);
         }
 
         public bool ContainsZero(string[,] grid)
@@ -316,88 +293,7 @@ namespace inspo_maze
 
 
         }
-        public void PrintSudoku()
-        {
-            Console.ForegroundColor = ConsoleColor.Magenta; //HERE STARTS NAME SUDOKU VERTICALY
-            Console.SetCursorPosition(2, 5);
-            Console.WriteLine("OOOOO          O   O");
-            Console.SetCursorPosition(1, 6);
-            Console.WriteLine("OOOOOOO        OO   OO");
-            Console.SetCursorPosition(1, 7);
-            Console.WriteLine("OOO  OO        OO   OO");
-            Console.SetCursorPosition(2, 8);
-            Console.WriteLine("OOO           OO   OO");
-            Console.SetCursorPosition(3, 9);
-            Console.WriteLine("OOO          OO   OO");
-            Console.SetCursorPosition(4, 10);
-            Console.WriteLine("OOO         OO   OO");
-            Console.SetCursorPosition(1, 11);
-            Console.WriteLine("OO  OOO        OO   OO");
-            Console.SetCursorPosition(1, 12);
-            Console.WriteLine("OOOOOOO         OO OO");
-            Console.SetCursorPosition(2, 13);
-            Console.WriteLine("OOOOO           OOO");
-            Console.SetCursorPosition(16, 14);
-            Console.WriteLine("O     OOOOO");
-            Console.SetCursorPosition(16, 15);
-            Console.WriteLine("OO   OOO OOO");
-            Console.SetCursorPosition(16, 16);
-            Console.WriteLine("OO   OO   OO");
-            Console.SetCursorPosition(16, 17);
-            Console.WriteLine("OO   OO   OO");
-            Console.SetCursorPosition(12, 18);
-            Console.WriteLine("OOOOOO   OO   OO");
-            Console.SetCursorPosition(11, 19);
-            Console.WriteLine("OOO OOO   OO   OO");
-            Console.SetCursorPosition(11, 20);
-            Console.WriteLine("OO   OO   OO   OO");
-            Console.SetCursorPosition(11, 21);
-            Console.WriteLine("OOO OOO   OOO OOO");
-            Console.SetCursorPosition(12, 22);
-            Console.WriteLine("OOOOO     OOOOO");
-            Console.SetCursorPosition(22, 23);
-            Console.WriteLine("O   OO    O   O");
-            Console.SetCursorPosition(21, 24);
-            Console.WriteLine("OO  OO    OO   OO");
-            Console.SetCursorPosition(21, 25);
-            Console.WriteLine("OO OO     OO   OO");
-            Console.SetCursorPosition(21, 26);
-            Console.WriteLine("OOOO      OO   OO");
-            Console.SetCursorPosition(21, 27);
-            Console.WriteLine("OOOO      OO   OO");
-            Console.SetCursorPosition(21, 28);
-            Console.WriteLine("OO OO     OO   OO");
-            Console.SetCursorPosition(21, 29);
-            Console.WriteLine("OO  OO    OO   OO");
-            Console.SetCursorPosition(21, 30);
-            Console.WriteLine("OO   OO    OO OO");
-            Console.SetCursorPosition(22, 31);
-            Console.WriteLine("O   O      OOO");
-            //HERE STARTS THE SMALL SUDOKU SQUARE CODE
-            Console.ForegroundColor = ConsoleColor.Cyan;
-            Console.SetCursorPosition(40, 10);
-            Console.WriteLine(" ______________");
-            Console.SetCursorPosition(40, 11);
-            Console.WriteLine("| 2  |    |  1 |");
-            Console.SetCursorPosition(40, 12);
-            Console.WriteLine("|    |  4 |    |");
-            Console.SetCursorPosition(40, 13);
-            Console.WriteLine("|____|____|____|");
-            Console.SetCursorPosition(40, 14);
-            Console.WriteLine("|    |    |  9 |");
-            Console.SetCursorPosition(40, 15);
-            Console.WriteLine("|    |  6 |    |");
-            Console.SetCursorPosition(40, 16);
-            Console.WriteLine("|____|____|____|");
-            Console.SetCursorPosition(40, 17);
-            Console.WriteLine("| 8  |    |  7 |");
-            Console.SetCursorPosition(40, 18);
-            Console.WriteLine("|    |    |    |");
-            Console.SetCursorPosition(40, 19);
-            Console.WriteLine("|____|____|____|");
-            Console.ResetColor();
 
-        } //visuazlization for game intro
         static void PrintSudokuHorizontal()
         {
             Console.ForegroundColor = ConsoleColor.DarkYellow;
@@ -457,7 +353,7 @@ namespace inspo_maze
             switch (chosedmenuitem)
             {
                 case "1":
-                    choseLevel();
+                    ChoseLevel();
                     break;
                 case "2":
                     Console.Clear();
@@ -478,7 +374,24 @@ namespace inspo_maze
             }
 
         }
-        
+        public void ChoseLevel()
+        {
+            Console.CursorVisible = false;
+            Console.Clear();
+            PrintSudokuHorizontal();
+            Console.WriteLine();
+            Console.WriteLine();
+            Console.ForegroundColor = ConsoleColor.Yellow;
+            Console.WriteLine("Please choose one of below mentioned levels:");
+            Console.WriteLine("Press '1' for EASY Sudoku");
+            Console.WriteLine("Press '2' for MEDIUM Sudoku");
+            Console.WriteLine("Press '3' for HARD Sudoku");
+            Console.WriteLine();
+            Console.WriteLine("To go back to menu press 'N'.");
+            LevelInput();
+
+        }
+
         public void exit()
         {
             Console.Clear();
@@ -521,6 +434,7 @@ namespace inspo_maze
         }
         public void YouWonvisualisation()
         {
+            Console.CursorVisible = false;
             Console.ForegroundColor = ConsoleColor.Magenta;
             Console.SetCursorPosition(2, 1);
             Console.WriteLine("O   O    OOOOO    O   O       O   O    OOOOO    O OOO");

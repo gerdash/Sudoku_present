@@ -71,7 +71,7 @@ namespace inspo_maze
             {
                 for (int x = 0; x < Columns; x++)
                 {
-                    
+                    #region Number Count Checks
                     if (Grid[y, x] == "1")
                     {
                         counter++;
@@ -153,6 +153,7 @@ namespace inspo_maze
                             Console.WriteLine(" ");
                         }
                     }
+                    #endregion
 
                     string initialElement = GridUnchanged[y, x];
                     string element = Grid[y, x];
@@ -168,14 +169,14 @@ namespace inspo_maze
                     {
                         if ((y ==3 || y == 5 || y == 9 || y == 11 || y == 15 || y == 17) && (x > 3 && x < 39) && x != 15 && x != 27)
                         {
-                            Console.ForegroundColor = ConsoleColor.Yellow;
+                            Console.ForegroundColor = ConsoleColor.DarkMagenta;
                             Console.BackgroundColor = ConsoleColor.Magenta;
                             Console.Write($"{element}");
                             Console.ResetColor();
                         }
                         else if (((y == 1 || y == 7 || y == 13 || y == 19) && (x > 1 && x < 41)) || ((y > 1 && y < 19) && (x == 15 || x == 27 || x == 2 || x == 3 || x == 39 || x == 40)))
                         {
-                            Console.ForegroundColor = ConsoleColor.DarkBlue;
+                            Console.ForegroundColor = ConsoleColor.Yellow;
                             Console.BackgroundColor = ConsoleColor.Magenta;
                             Console.Write($"{element}");
                             Console.ResetColor();
